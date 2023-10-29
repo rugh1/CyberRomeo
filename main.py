@@ -1,3 +1,10 @@
+"""
+author: rugh1(Nir I don't want to write my full name here)
+date:29/10/23
+Description: script that encrypts and decrypts based on a specific table also a code for checking the encryption and dec
+"""
+
+
 import sys
 import logging
 
@@ -42,6 +49,15 @@ EXM = (('My bounty is as boundless as the sea, My love as deep; the more I give 
         '18,30,36,92,90,98,13,30,39,91,19,98,36,17,98,33,36,93,16,98,30,91,98,30,90,98,91,36,98,34,16,98,65,19,12'
         ',91,98,44,98,34,92,90,91,98,33,36,93,16,98,12,98,33,36,12,91,19,16,15,98,16,35,16,34,96,100'))
 
+"""
+gives difference from input to answers
+:param str_to_check string to check compared to answer
+:type str_to_check:str
+:param answer answer
+:type answer:str
+:return: string containing the difference between string and answer
+"""
+
 
 def diff(str_to_check, answer):
     diff_in_check = ""
@@ -51,6 +67,12 @@ def diff(str_to_check, answer):
             diff_in_check += str_to_check[i]
             diff_in_answer += answer[i]
     return f"in output: {diff_in_check}, the answer: {diff_in_answer}"
+
+
+"""
+checks code with each example and prints if you are right and wrong if wrong where using diff function
+:param None
+"""
 
 
 def test_code():
@@ -65,8 +87,26 @@ def test_code():
             print(f"test decryption: {diff(decrypt(example[1]), example[0])}")
 
 
+"""
+encrypt text using the table
+:param msg msg to encrypt
+:type msg:str
+:return: encrypted msg
+"""
+
+
 def encrypt(msg):
     return ",".join(map(lambda x: str(NUMBERS[LETTERS.index(x)]), msg))
+
+
+"""
+write to file in path a msg
+:param path path to write to
+:type path:str
+:param msg string to write
+:type msg:str
+:return: true if wrote successfully false if failed
+"""
 
 
 def write_file(path, msg):
@@ -78,6 +118,14 @@ def write_file(path, msg):
     except Exception as err:
         logging.error("error in writing to file" + str(err))
         return False
+
+
+"""
+read from file in path and return text read
+:param path path to write to
+:type path:str
+:return: msg if read successfully None if failed to read aka error
+"""
 
 
 def read_file(path):
@@ -95,8 +143,24 @@ def read_file(path):
         return None
 
 
+"""
+decrypt text using the table
+:param msg msg to decrypt
+:type msg:str
+:return: decrypted msg
+"""
+
+
 def decrypt(msg):
     return ''.join(map(lambda x: LETTERS[NUMBERS.index(x if x == '' else int(x))], msg.split(',')))
+
+
+"""
+main
+:param msg msg to decrypt
+:type msg:str
+:return: decrypted msg
+"""
 
 
 def main(mode):
